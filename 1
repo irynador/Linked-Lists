@@ -1,0 +1,140 @@
+
+package com.company;
+import sun.awt.image.ImageWatched;
+import javax.xml.soap.Node;
+
+public class LinkedList
+{
+    private Node topElement;
+    private int N;
+
+    class Node {
+        private Node next;
+        private int digit;
+
+        Node() {}
+
+        Node(int digit, Node next) {
+            this.digit = digit;
+            this.next = next;
+        }
+
+        Node getNext() {
+            return this.next;
+        }
+
+        boolean hasNext(){
+            return this.next != null;
+        }
+    }
+
+    public LinkedList(){
+        topElement = null;
+        N = 0;
+    }
+
+    public LinkedList(int d){
+        Node node = new Node(d, null);
+        topElement = node;
+        N = 1;
+    }
+
+    public void addFirst(int num){
+        Node node = new Node(num, topElement);
+        topElement = node;
+        N++;
+    }
+
+    public void addLast(int num){
+        Node node = new Node(num, null);
+        N++;
+
+        Node current = topElement;
+        if (current == null) {
+            topElement = node;
+            return;
+        }
+        while (current.hasNext()){
+            current = current.next;
+        }
+        current.next = node;
+    }
+
+    public void removeAtIndex(int index) {
+        int counter = 0;
+        Node current = this.topElement;
+        Node prevNode = null;
+        while(current.hasNext() && counter < index){
+            if (counter == index - 1) {
+                prevNode = current;
+            }
+            counter++;
+            current = current.next;
+        }
+        if (prevNode != null) {
+            prevNode.next = current.next;
+        }
+        else {
+            topElement = current.next;
+        }
+        current = null;
+    }
+
+    public int getSize(){
+        return N;
+    }
+
+    public String toString(){
+        String result = "";
+        Node current = topElement;
+        while (current.hasNext()){
+            result += current.digit;
+            current = current.next;
+        }
+        result += current.digit;
+        return result;
+    }
+
+    public static LinkedList sumOfLists(LinkedList list1, LinkedList list2){
+        if (list1 == null && list2 == null)
+            return null;
+        LinkedList sum = new LinkedList();
+        Node current1 = list1.topElement;
+        Node current2 = list2.topElement;
+        int result = 0;
+
+        while (current1 != null || current2 != null){
+            int foperand = current1 != null ? current1.digit : 0;
+            int soperand = current2 != null ? current2.digit : 0;
+            result += foperand + soperand;
+
+            sum.addLast(result%10);
+            result = result / 10;
+
+
+            if (current1 != null) current1 = current1.next;
+            if (current2 != null) current2 = current2.next;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        LinkedList list1 = new LinkedList();
+        list1.addFirst(2);
+        list1.addFirst(9);
+        list1.addFirst(5);
+        //list1.addFirst(5);
+
+        LinkedList list2 = new LinkedList();
+        list2.addFirst(5);
+        list2.addFirst(1);
+        list2.addFirst(3);
+        list2.addFirst(2);
+        list2.addFirst(2);
+        list2.addFirst(2);
+
+        System.out.println(list1.toString());
+        System.out.println(list2.toString());
+        System.out.println(sumOfLists(list1, list2).toString());
+    }
+}
