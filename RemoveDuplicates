@@ -1,0 +1,113 @@
+package com.company;
+
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+public class LinkedList1 {
+
+    public Link firstLink;
+
+    LinkedList1() {
+        firstLink = null;
+    }
+
+    public boolean isEmpty(){
+        return (firstLink == null);
+    }
+
+    public void insertFirstLink(String element, int digit){
+        Link newLink = new Link(element, digit);
+        // Connects the firstLink field to the new Link
+        newLink.next = firstLink;
+        firstLink = newLink;
+    }
+
+    public Link removeFirst(){
+        Link linkReference = firstLink;
+        if(!isEmpty()){
+            // Removes the Link from the List
+            firstLink = firstLink.next;
+        } else {
+            System.out.println("Empty LinkedList");
+        }
+        return linkReference;
+    }
+
+    public void display(){
+        Link theLink = firstLink;
+        // Start at the reference stored in firstLink and
+        // keep getting the references stored in next for
+        // every Link until next returns null
+        while(theLink != null){
+            theLink.display();
+            theLink = theLink.next;
+            //System.out.println("Next Link: " + theLink.next);
+            //theLink = theLink.next;
+            //System.out.println();
+           //System.out.print();
+
+        }
+    }
+    public void removeDuplicates() {
+        Link compare = firstLink;
+
+        while (compare != null) {
+            Link previousLink = compare;
+            Link currentLink = compare.next;
+
+            while (currentLink != null) {
+                if (compare.element.equals(currentLink.element)) {
+                    previousLink.next = currentLink.next;
+                }
+                previousLink = currentLink;
+                currentLink = currentLink.next;
+            }
+            compare = compare.next;
+        }
+    }
+
+    public class Link {
+        // Set to public so getters & setters aren't needed
+
+        public String element;
+        public int digit;
+
+        // Reference to next link made in the LinkList
+        // Holds the reference to the Link that was created before it
+        // Set to null until it is connected to other links
+        public Link next;
+
+        Link(String element, int digit) {
+            this.element = element;
+            this.digit = digit;
+        }
+
+        public void display() {
+            System.out.println(element + ": " + digit);
+        }
+
+        public String toString() {
+            return element;
+        }
+    }
+    public static void main(String[] args) {
+
+        String g = "f";
+        String f = "f";
+        boolean t = g.equals(f);
+
+        LinkedList1 list = new LinkedList1();
+        list.insertFirstLink("F", 1);
+        list.insertFirstLink("O", 1);
+        list.insertFirstLink("L", 1);
+        list.insertFirstLink("L", 1);
+        list.insertFirstLink("O", 1);
+        list.insertFirstLink("W", 1);
+        list.insertFirstLink("U", 1);
+        list.insertFirstLink("P", 1);
+        list.display();
+
+        System.out.println("------------------------------------------------------");
+        list.removeDuplicates();
+        list.display();
+    }
+}
