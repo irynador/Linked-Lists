@@ -1,0 +1,112 @@
+package com.company;
+
+public class LinkedList2<Item> {
+    private Node topElement;
+    private int N;
+
+    class Node {
+        private Item digit;
+
+        private Node next;
+
+        Node() {
+        }
+
+        Node(Item digit, Node next) {
+            this.digit = digit;
+            this.next = next;
+        }
+
+        Node getNext() {
+            return this.next;
+        }
+
+        boolean hasNext() {
+            return this.next != null;
+        }
+    }
+
+    public LinkedList2() {
+        topElement = null;
+        N = 0;
+    }
+
+    public LinkedList2(Item d) {
+        Node node = new Node(d, null);
+        topElement = node;
+        N = 1;
+    }
+
+    public void addFirst(Item num) {
+        Node node = new Node(num, topElement);
+        topElement = node;
+        N++;
+    }
+
+    public void addLast(Item num) {
+        Node node = new Node(num, null);
+        N++;
+
+        Node current = topElement;
+        if (current == null) {
+            topElement = node;
+            return;
+        }
+        while (current.hasNext()) {
+            current = current.next;
+        }
+        current.next = node;
+    }
+
+    public void DeleteNode(Node node){
+        Node current = topElement;
+
+        while (current.hasNext()) {
+            if (current.next == node){
+                current.next = node.next;
+            } else {
+                current = current.next;
+            }
+
+        }
+
+    }
+
+
+    public int getSize() {
+        return N;
+    }
+
+    public String toString() {
+        String result = "";
+        Node current = topElement;
+        while (current.hasNext()) {
+            result += current.digit;
+            current = current.next;
+        }
+        result += current.digit;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        LinkedList2<Integer> list1 = new LinkedList2<Integer>();
+        list1.addFirst(2);
+        list1.addFirst(9);
+        list1.addFirst(5);
+        list1.addFirst(1);
+        list1.addFirst(3);
+        list1.addFirst(4);
+
+        LinkedList2<String> list2 = new LinkedList2<String>();
+        list2.addFirst("A");
+        list2.addFirst("R");
+        list2.addFirst("I");
+
+        System.out.println(list1.toString());
+        System.out.println(list2.toString());
+
+        list1.DeleteNode(list1.topElement.next.next);
+        System.out.println(list1.toString());
+
+    }
+}
