@@ -1,0 +1,117 @@
+package com.company;
+
+public class LinkedList<Item> {
+    private Node topElement;
+    private int N;
+
+    class Node {
+        private Item digit;
+
+        private Node next;
+
+        Node() {
+        }
+
+        Node(Item digit, Node next) {
+            this.digit = digit;
+            this.next = next;
+        }
+
+        Node getNext() {
+            return this.next;
+        }
+
+        boolean hasNext() {
+            return this.next != null;
+        }
+    }
+
+    public LinkedList() {
+        topElement = null;
+        N = 0;
+    }
+
+    public LinkedList(Item d) {
+        Node node = new Node(d, null);
+        topElement = node;
+        N = 1;
+    }
+
+    public void addFirst(Item num) {
+        Node node = new Node(num, topElement);
+        topElement = node;
+        N++;
+    }
+
+    public void addLast(Item num) {
+        Node node = new Node(num, null);
+        N++;
+
+        Node current = topElement;
+        if (current == null) {
+            topElement = node;
+            return;
+        }
+        while (current.hasNext()) {
+            current = current.next;
+        }
+        current.next = node;
+    }
+
+    public Item findNthToLast(int index){
+        Node p1 = topElement;
+        Node p2 = topElement;
+
+        for (int j = 0; j < index ; j++) { // make then i nodes apart.
+            if (p2 == null) {
+                return null;
+            }
+            p2 = p2.next;
+        }
+        while (p2 != null) { // move till p2 goes past the end of the list.
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        return p1.digit;
+    }
+
+
+    public int getSize() {
+        return N;
+    }
+
+    public String toString() {
+        String result = "";
+        Node current = topElement;
+        while (current.hasNext()) {
+            result += current.digit;
+            current = current.next;
+        }
+        result += current.digit;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        LinkedList<Integer> list1 = new LinkedList<Integer>();
+        list1.addFirst(2);
+        list1.addFirst(9);
+        list1.addFirst(5);
+        list1.addFirst(1);
+        list1.addFirst(3);
+        list1.addFirst(4);
+
+        LinkedList<String> list2 = new LinkedList<String>();
+        list2.addFirst("A");
+        list2.addFirst("R");
+        list2.addFirst("I");
+
+        System.out.println(list1.toString());
+        System.out.println(list2.toString());
+        System.out.println(list1.findNthToLast(2));
+        System.out.println(list1.findNthToLast(3));
+        System.out.println(list1.findNthToLast(6));
+        System.out.println(list1.findNthToLast(7));
+        System.out.println(list2.findNthToLast(2));
+
+    }
+}
