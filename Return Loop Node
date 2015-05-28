@@ -1,0 +1,163 @@
+package com.company;
+
+public class LinkedList3<Item> {
+    private Node topElement;
+    private int N;
+
+    class Node {
+        private Item digit;
+        private Node next;
+
+        Node() {
+        }
+        Node(Item digit) {
+            this.digit = digit;
+        }
+
+        Node(Item digit, Node next) {
+            this.digit = digit;
+            this.next = next;
+        }
+
+        Node getNext() {
+            return this.next;
+        }
+
+        boolean hasNext() {
+            return this.next != null;
+        }
+    }
+
+    public LinkedList3() {
+        topElement = null;
+        N = 0;
+    }
+
+
+    public LinkedList3(Item d) {
+        Node node = new Node(d, null);
+        topElement = node;
+        N = 1;
+    }
+
+    public void addFirst(Item num) {
+        Node node = new Node(num, topElement);
+        topElement = node;
+        N++;
+    }
+
+    public void addLast(Item num) {
+        Node node = new Node(num, null);
+        N++;
+
+        Node current = topElement;
+        if (current == null) {
+            topElement = node;
+            return;
+        }
+        while (current.hasNext()) {
+            current = current.next;
+        }
+        current.next = node;
+    }
+
+
+   public Item returnLoopStartNode() {
+        Node slow = topElement;
+        Node fast = topElement;
+
+        if (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+        } else {
+            return null;
+        }
+        slow = slow.next;
+
+        while(slow != fast) {
+            slow = slow.next;
+            if (fast.next != null && fast.next.next != null) {
+                fast = fast.next.next;
+            } else {
+                return null;
+            }
+        }
+        slow = topElement;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow.digit;
+   }
+
+    public Item returnLoop(){
+        Node current = topElement;
+        for (int i = 0; i < this.getSize() - 1; i++) {
+            current = current.next;
+        }
+        return current.next.digit;
+    }
+
+
+
+    public void createLoopByIndex(int index) {
+        int counter = 0;
+        Node current = topElement;
+        Node circleNode = null;
+        while (current.next != null) {
+            if (counter == index) {
+                circleNode = current;
+            }
+            current = current.next;
+            counter++;
+        }
+        current.next = circleNode;
+    }
+
+
+    public int getSize() {
+        return N;
+    }
+
+    public String toString() {
+        String result = "";
+        Node current = topElement;
+        while (current.hasNext()) {
+            result += current.digit;
+            current = current.next;
+        }
+        result += current.digit;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        LinkedList3<Integer> list1 = new LinkedList3<Integer>();
+        list1.addFirst(2);
+        list1.addFirst(9);
+        list1.addFirst(5);
+        list1.addFirst(1);
+        list1.addFirst(3);
+        list1.addFirst(4);
+
+
+        LinkedList3<String> list2 = new LinkedList3<String>();
+        list2.addFirst("C");
+        list2.addFirst("E");
+        list2.addFirst("D");
+        list2.addFirst("C");
+        list2.addFirst("B");
+        list2.addFirst("A");
+
+
+        System.out.println(list1.toString());
+        System.out.println(list2.toString());
+
+        list2.createLoopByIndex(4);
+
+        System.out.println(list2.returnLoopStartNode());
+        System.out.println(list2.returnLoop());
+
+
+
+
+    }
+}
