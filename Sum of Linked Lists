@@ -1,99 +1,10 @@
+/* You have two numbers represented by a linked list, where each node contains a single digit.The
+digits are stored in reverse order, such that the 1’s digit is at the head of the list.Write a function 
+that adds the two numbers and returns the sum as a linked list.
+EXAMPLE Input: (3 -> 1 -> 5) + (5 -> 9 -> 2)
+Output: 8 -> 0 -> 8
+*/
 
-package com.company;
-import sun.awt.image.ImageWatched;
-import javax.xml.soap.Node;
-
-public class LinkedList
-{
-    private Node topElement;
-    private int N;
-
-    class Node {
-        private Node next;
-        private int digit;
-
-        Node() {}
-
-        Node(int digit, Node next) {
-            this.digit = digit;
-            this.next = next;
-        }
-
-        Node getNext() {
-            return this.next;
-        }
-
-        boolean hasNext(){
-            return this.next != null;
-        }
-    }
-
-    public LinkedList(){
-        topElement = null;
-        N = 0;
-    }
-
-    public LinkedList(int d){
-        Node node = new Node(d, null);
-        topElement = node;
-        N = 1;
-    }
-
-    public void addFirst(int num){
-        Node node = new Node(num, topElement);
-        topElement = node;
-        N++;
-    }
-
-    public void addLast(int num){
-        Node node = new Node(num, null);
-        N++;
-
-        Node current = topElement;
-        if (current == null) {
-            topElement = node;
-            return;
-        }
-        while (current.hasNext()){
-            current = current.next;
-        }
-        current.next = node;
-    }
-
-    public void removeAtIndex(int index) {
-        int counter = 0;
-        Node current = this.topElement;
-        Node prevNode = null;
-        while(current.hasNext() && counter < index){
-            if (counter == index - 1) {
-                prevNode = current;
-            }
-            counter++;
-            current = current.next;
-        }
-        if (prevNode != null) {
-            prevNode.next = current.next;
-        }
-        else {
-            topElement = current.next;
-        }
-        current = null;
-    }
-
-    public int getSize(){
-        return N;
-    }
-
-    public String toString(){
-        String result = "";
-        Node current = topElement;
-        while (current.hasNext()){
-            result += current.digit;
-            current = current.next;
-        }
-        result += current.digit;
-        return result;
-    }
 
     public static LinkedList sumOfLists(LinkedList list1, LinkedList list2){
         if (list1 == null && list2 == null)
@@ -123,7 +34,7 @@ public class LinkedList
         list1.addFirst(2);
         list1.addFirst(9);
         list1.addFirst(5);
-        //list1.addFirst(5);
+        
 
         LinkedList list2 = new LinkedList();
         list2.addFirst(5);
@@ -133,8 +44,8 @@ public class LinkedList
         list2.addFirst(2);
         list2.addFirst(2);
 
-        System.out.println(list1.toString());
-        System.out.println(list2.toString());
-        System.out.println(sumOfLists(list1, list2).toString());
+        System.out.println(list1);
+        System.out.println(list2);
+        System.out.println(sumOfLists(list1, list2));
     }
-}
+
