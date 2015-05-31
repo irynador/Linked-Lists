@@ -3,15 +3,15 @@ public class GenericsList<Item> {
     private int N;
 
     class Node {
-        private Item digit;
+        private Item value;
 
         private Node next;
 
         Node() {
         }
 
-        Node(Item digit, Node next) {
-            this.digit = digit;
+        Node(Item value, Node next) {
+            this.value = value;
             this.next = next;
         }
 
@@ -83,10 +83,10 @@ public class GenericsList<Item> {
         String result = "";
         Node current = topElement;
         while (current.hasNext()) {
-            result += current.digit;
+            result += current.value;
             current = current.next;
         }
-        result += current.digit;
+        result += current.value;
         return result;
     }
 
